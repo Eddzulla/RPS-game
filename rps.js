@@ -1,5 +1,6 @@
 compScore = 0;
 humanScore = 0;
+round = 0;
 
 function getComputerChoice(){
     choices = ["Rock", "Paper", "Scissors"];
@@ -10,13 +11,15 @@ function getComputerChoice(){
 }
 
 function getHumanChoice(){
-    choice = prompt("What do you wanna do?","")
+    choice = prompt("What's your move?")
+  
     return choice;
 }
 
-function playRound(humanChoice, compChoice){
+function playRound(humanChoice, compChoice, round){
     human = humanChoice.toLowerCase();
     comp = compChoice.toLowerCase();
+    console.log(`Round ${round}: Human chose ${human} and computer chose ${comp}`);
 
     if(comp == "rock"){
         switch (human){
@@ -73,7 +76,7 @@ function playGame(){
     for(let i=0; i<5; i++){
         compChoice = getComputerChoice();
         humanChoice = getHumanChoice();
-        playRound(humanChoice, compChoice);
+        playRound(humanChoice, compChoice, (i+1));
         console.log(`Current score: \n Human: ${humanScore} \n Computer: ${compScore}`);
     }
     if(humanScore > compScore){
