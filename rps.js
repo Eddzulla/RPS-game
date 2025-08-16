@@ -2,6 +2,19 @@ compScore = 0;
 humanScore = 0;
 round = 0;
 
+const resultP = document.querySelector("#result");
+resultP.textContent = "No results as of yet";
+
+const finalResultP = document.querySelector("#final-result");
+finalResultP.textContent = "No result yet...";
+
+const eventP = document.querySelector("#round-event");
+eventP.textContent = "Waiting for you to make a move...";
+
+const buttonBubble = document.querySelector(".moves-container");
+console.log(buttonBubble);
+
+// add elements to replace console.logging, for example results etc
 function getComputerChoice(){
     choices = ["Rock", "Paper", "Scissors"];
     random_index = Math.floor(Math.random()*3);
@@ -9,30 +22,36 @@ function getComputerChoice(){
     return selected_choice;
 
 }
+// add event handler with switch depending on button class
 
-function getHumanChoice(){
-    choice = prompt("What's your move?")
-  
-    return choice;
-}
+buttonBubble.addEventListener("click", (e) =>{
+    playRound(e.target.textContent, getComputerChoice(), round);
+    round=round+1;
+})
 
 function playRound(humanChoice, compChoice, round){
     human = humanChoice.toLowerCase();
     comp = compChoice.toLowerCase();
-    console.log(`Round ${round}: Human chose ${human} and computer chose ${comp}`);
+    eventP.textContent = `Round ${round}: Human chose ${human} and computer chose ${comp}`;
+
+   
+    if(round==5){
+        evaluateWinner();
+        return;
+    }
 
     if(comp == "rock"){
         switch (human){
             case "rock":
-                console.log("It's a draw!");
+                updateMsg("It's a draw!");
                 break;
             case "paper":
                 humanScore += 1;
-                console.log("Human wins this round!");
+                updateMsg("Human wins this round!");
                 break;
             case "scissors":
                 compScore +=1;
-                console.log("Computer wins this round!")
+                updateMsg("Computer wins this round!")
                 break;
         }
         return;
@@ -41,14 +60,14 @@ function playRound(humanChoice, compChoice, round){
          switch (human){
             case "rock":
                 compScore += 1;
-                console.log("Computer wins this round!");
+                updateMsg("Computer wins this round!");
                 break;
             case "paper":
-                console.log("It's a draw!");
+                updateMsg("It's a draw!");
                 break;
             case "scissors":
                 humanScore += 1;
-                console.log("Human wins this round!")
+                updateMsg("Human wins this round!")
                 break;
         }
         return;
@@ -57,14 +76,14 @@ function playRound(humanChoice, compChoice, round){
         switch (human){
             case "rock":
                 humanScore += 1;
-                console.log("Human wins this round!");
+                updateMsg("Human wins this round!");
                 break;
             case "paper":
                 compScore += 1;
-                console.log("Computer wins this round!");
+                updateMsg("Computer wins this round!");
                 break;
             case "scissors":
-                console.log("It's a draw!")
+                updateMsg("It's a draw!")
                 break;
         }
         return;
@@ -72,23 +91,22 @@ function playRound(humanChoice, compChoice, round){
     return;
 }
 
-function playGame(){
-    for(let i=0; i<5; i++){
-        compChoice = getComputerChoice();
-        humanChoice = getHumanChoice();
-        playRound(humanChoice, compChoice, (i+1));
-        console.log(`Current score: \n Human: ${humanScore} \n Computer: ${compScore}`);
-    }
-    if(humanScore > compScore){
-        console.log(`The winner of the game is human with score ${humanScore} vs ${compScore}!`);
-    }
-    else if(compScore > humanScore){
-        console.log(`The winner of the game is computer with score ${compScore} vs ${humanScore}!`);
-    }
-    else if(compScore == humanScore){
-        console.log("Oh shit, it's a draw!")
-    }
-
+function updateMsg(msg){
+    resultP.textContent = msg;
 }
 
-playGame();
+function evaluateWinner(){
+    if(humanScore > compScore){
+        finalResultP.textContent=`The winner of the game is human with score ${humanScore} vs ${compScore}!`;
+    }
+    else if(compScore > humanScore){
+        finalResultP.textContent=`The winner of the game is computer with score ${compScore} vs ${humanScore}!`;
+    }
+    else if(compScore == humanScore){
+        finalResultP.textContent="Oh shit, it's a draw!";
+    }
+    round=0;
+    humanScore = 0;
+    compScore=0;
+}
+

@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="rps.js"></script>
+    <link rel="stylesheet" href="styles.css">
+   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    
+    <section class="player-selection">
+        <h1>Player selection options:</h1>
+        <div class="moves-container">
+            <button class="rock btn">Rock</button>
+            <button class="paper btn">Paper</button>
+            <button class="scissors btn">Scissors</button>
+        </div>
+    </section>
+    <section class="results-section">
+        <div class="results-container">
+            <p id="round-event"></p>
+            <h2>Results from this round:</h1>
+            <p id="result"></p>
+            <h2>Result after 5 rounds:</h2>
+            <p id="final-result"></p>
+        </div>
+
+    </section>
+     <script src="rps.js"></script>
 </body>
 </html>
